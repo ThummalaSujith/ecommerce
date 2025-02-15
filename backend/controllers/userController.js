@@ -94,7 +94,13 @@ const getCurrentUserProfile = asyncHandler(async (req, res) => {
 });
 
 const updateCurrentUserProfile = asyncHandler(async (req, res) => {
+
+  console.log("Received request body:", req.body)
+
+
   const user = await User.findById(req.user._id);
+
+ 
 
   if (user) {
     user.username = req.body.username || user.username;
@@ -119,10 +125,14 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
+
+  
 });
 
 const deleteUserById = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id);
+
+  
+  const user = await User.findById(req.params.id);
 
   if (user) {
     if (user.isAdmin) {
@@ -166,6 +176,7 @@ const updateUserById = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
     });
+
   } else {
     res.status(404);
     throw new Error("user not found");
