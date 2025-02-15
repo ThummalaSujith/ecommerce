@@ -2,6 +2,7 @@ import Category from "../models/categoryModel.js";
 
 import asyncHandler from "../middlewares/asyncHandler.js";
 import internal from "stream";
+import { error } from "console";
 
 const createCategory = asyncHandler(async (req, res) => {
   try {
@@ -52,4 +53,34 @@ const updateCategory = asyncHandler(async (req, res) => {
   }
 });
 
-export { createCategory, updateCategory };
+const deleteCategory = asyncHandler(async (req, res) => {
+  try {
+    const { categoryId } = req.params;
+
+    const category = await Category.findByIdAndDelete(categoryId);
+
+    if (!category) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    res.json({
+      message: "Category Successfully deleted",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+const listCategory = asyncHandler(async (req, res) => {
+  try {
+    const all = await Category.find({});
+
+
+
+    res.json(all);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export { createCategory, updateCategory, deleteCategory, listCategory };
