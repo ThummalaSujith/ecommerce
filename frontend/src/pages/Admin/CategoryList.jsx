@@ -57,13 +57,16 @@ const CategoryList = () => {
       if (deletecategory.error) {
         toast.error(deletecategory.error);
       } else {
-        toast.success(`${deletecategory.name} is deleted`);
+        toast.success(`${selectCategory.name} is deleted`);
         setSelectCategory(null)
         setModalVisible(false)
-        
+
 
       }
-    } catch (error) {}
+    } catch (error) {
+        console.log(error)
+        toast.error("Category deletion failed. Try again")
+    }
   };
 
   const handleUpdateCategory = async (e) => {
