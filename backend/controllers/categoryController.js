@@ -75,12 +75,30 @@ const listCategory = asyncHandler(async (req, res) => {
   try {
     const all = await Category.find({});
 
-
-
     res.json(all);
   } catch (error) {
     console.log(error);
   }
 });
 
-export { createCategory, updateCategory, deleteCategory, listCategory };
+const readCategory = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const category = await Category.findOne({ _id: id });
+
+    res.json(category);
+  } catch (error) {
+    console.log(error);
+
+    return res.status(404);
+  }
+});
+
+export {
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  listCategory,
+  readCategory,
+};
