@@ -52,12 +52,16 @@ const CategoryList = () => {
   const handleDeleteCategory = async (e) => {
     e.preventDefault();
     try {
-      const deletecategory = await deleteCategory({ name }).unwrap();
+      const deletecategory = await deleteCategory(selectCategory._id).unwrap();
 
       if (deletecategory.error) {
         toast.error(deletecategory.error);
       } else {
         toast.success(`${deletecategory.name} is deleted`);
+        setSelectCategory(null)
+        setModalVisible(false)
+        
+
       }
     } catch (error) {}
   };
